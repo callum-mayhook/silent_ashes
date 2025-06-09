@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bn2dogmuljg8i"]
+
+[ext_resource type="Script" uid="uid://c6uvqqhvxwrtc" path="res://board.gd" id="1_psm7c"]
+
+[node name="Board" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_psm7c")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.168627, 0.168627, 0.168627, 1)

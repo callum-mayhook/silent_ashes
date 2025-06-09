@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://74at8fk3n2sx"]
+
+[ext_resource type="Script" uid="uid://3ag2e2px7mmh" path="res://connection_line.gd" id="1_d2ce3"]
+
+[node name="ConnectionLine" type="Node2D"]
+script = ExtResource("1_d2ce3")
