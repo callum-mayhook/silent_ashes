@@ -18,10 +18,10 @@ func _ready():
 	anchor_right = 1.0
 	anchor_bottom = 1.0
 	
-        rename_dialog.get_ok_button().text = "Rename"
-        rename_dialog.connect("confirmed", _on_rename_confirmed)
-        portrait_file_dialog.connect("file_selected", _on_portrait_file_selected)
-        background.gui_input.connect(_on_background_gui_input)
+	rename_dialog.get_ok_button().text = "Rename"
+	rename_dialog.connect("confirmed", _on_rename_confirmed)
+	portrait_file_dialog.connect("file_selected", _on_portrait_file_selected)
+	background.gui_input.connect(_on_background_gui_input)
 	# Create cards
 	create_character_card("Elias Varn", Vector2(100, 100))
 	create_character_card("Carina Bel", Vector2(300, 100))
@@ -38,24 +38,24 @@ func create_character_card(character_name: String, pos: Vector2):
 	card.card_released.connect(_on_card_released)
 	card.remove_connections.connect(_on_remove_connections)
 	card.rename_requested.connect(_on_rename_requested)
-        card.request_portrait.connect(_on_request_portrait)
+	card.request_portrait.connect(_on_request_portrait)
 	cards.append(card)
 
 func _on_card_clicked(card):
-        if selected_card and selected_card != card:
-                create_connection(selected_card, card)
-                selected_card.set_selected(false)
-                selected_card = null
-        else:
-                if selected_card == card:
-                        selected_card.set_selected(false)
-                        selected_card = null
-                else:
-                        if selected_card:
-                                selected_card.set_selected(false)
-                        selected_card = card
-                        card.set_selected(true)
-                        print("Selected: ", card.character_name)
+		if selected_card and selected_card != card:
+				create_connection(selected_card, card)
+				selected_card.set_selected(false)
+				selected_card = null
+		else:
+				if selected_card == card:
+						selected_card.set_selected(false)
+						selected_card = null
+				else:
+						if selected_card:
+								selected_card.set_selected(false)
+						selected_card = card
+						card.set_selected(true)
+						print("Selected: ", card.character_name)
 
 func _on_card_released(card):
 	pass
@@ -134,11 +134,11 @@ func _on_request_portrait(card):
 	portrait_file_dialog.popup_centered()
 
 func _on_portrait_file_selected(path):
-        if portrait_target:
-                var tex = load(path)
-                portrait_target.set_portrait(tex)
-                portrait_target = null
+		if portrait_target:
+				var tex = load(path)
+				portrait_target.set_portrait(tex)
+				portrait_target = null
 
 func _on_background_gui_input(event):
-        if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-                selected_card = null
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+				selected_card = null
