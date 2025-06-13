@@ -23,3 +23,6 @@ visible = false
 offset_left = 10.0
 offset_top = 10.0
 size_flags_horizontal = 3
+
+[node name="PortraitFileDialog" type="FileDialog" parent="."]
+filters = PackedStringArray("*.png", "*.jpg")
