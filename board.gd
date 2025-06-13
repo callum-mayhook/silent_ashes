@@ -6,9 +6,11 @@ var cards = []
 var connections = []
 var selected_card = null
 var rename_target = null
+var portrait_target = null
 
 @onready var rename_dialog: AcceptDialog = $RenameDialog
 @onready var rename_line_edit: LineEdit = $RenameDialog/LineEdit
+@onready var portrait_file_dialog: FileDialog = $PortraitFileDialog
 
 func _ready():
 	# Make board fill screen
@@ -17,7 +19,7 @@ func _ready():
 	
 	rename_dialog.get_ok_button().text = "Rename"
 	rename_dialog.connect("confirmed", _on_rename_confirmed)
-	
+	portrait_file_dialog.connect("file_selected", _on_portrait_file_selected)
 	# Create cards
 	create_character_card("Elias Varn", Vector2(100, 100))
 	create_character_card("Carina Bel", Vector2(300, 100))
@@ -34,6 +36,7 @@ func create_character_card(character_name: String, pos: Vector2):
 	card.card_released.connect(_on_card_released)
 	card.remove_connections.connect(_on_remove_connections)
 	card.rename_requested.connect(_on_rename_requested)
+        card.request_portrait.connect(_on_request_portrait)
 	cards.append(card)
 
 func _on_card_clicked(card):
@@ -115,3 +118,13 @@ func _on_rename_confirmed():
 	if rename_target:
 		rename_target.set_character(rename_line_edit.text, rename_target.character_id)
 		rename_target = null
+
+func _on_request_portrait(card):
+	portrait_target = card
+	portrait_file_dialog.popup_centered()
+
+func _on_portrait_file_selected(path):
+	if portrait_target:
+		var tex = load(path)
+		portrait_target.set_portrait(tex)
+		portrait_target = null

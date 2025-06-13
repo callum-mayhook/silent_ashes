@@ -11,6 +11,7 @@ signal card_clicked(card)
 signal card_released(card)
 signal remove_connections(card)
 signal rename_requested(card)
+signal request_portrait(card)
 
 func _ready():
 	mouse_filter = Control.MOUSE_FILTER_PASS
@@ -21,6 +22,7 @@ func _ready():
 	pm.add_item("Inspect", 0)
 	pm.add_item("Rename", 1)
 	pm.add_item("Remove Connections", 2)
+        pm.add_item("Set Portrait", 3)
 	pm.id_pressed.connect(_on_popup_menu_id_pressed)
 
 func _draw():
@@ -56,6 +58,8 @@ func set_character(name: String, id: int):
 	character_id = id
 	$CharacterName.text = name
 
+func set_portrait(texture: Texture2D):
+	$Portrait.texture = texture
 func _show_context_menu():
 	var pm = $PopupMenu
 	pm.position = get_local_mouse_position()
@@ -66,3 +70,4 @@ func _on_popup_menu_id_pressed(id: int):
 		0: print("Inspect ", character_name)
 		1: emit_signal("rename_requested", self)
 		2: emit_signal("remove_connections", self)
+                3: emit_signal("request_portrait", self)
