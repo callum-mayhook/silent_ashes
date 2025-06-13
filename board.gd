@@ -7,6 +7,7 @@ var connections = []
 var selected_card = null
 var rename_target = null
 var portrait_target = null
+@onready var background: ColorRect = $ColorRect
 
 @onready var rename_dialog: AcceptDialog = $RenameDialog
 @onready var rename_line_edit: LineEdit = $RenameDialog/LineEdit
@@ -17,9 +18,10 @@ func _ready():
 	anchor_right = 1.0
 	anchor_bottom = 1.0
 	
-	rename_dialog.get_ok_button().text = "Rename"
-	rename_dialog.connect("confirmed", _on_rename_confirmed)
-	portrait_file_dialog.connect("file_selected", _on_portrait_file_selected)
+        rename_dialog.get_ok_button().text = "Rename"
+        rename_dialog.connect("confirmed", _on_rename_confirmed)
+        portrait_file_dialog.connect("file_selected", _on_portrait_file_selected)
+        background.gui_input.connect(_on_background_gui_input)
 	# Create cards
 	create_character_card("Elias Varn", Vector2(100, 100))
 	create_character_card("Carina Bel", Vector2(300, 100))
@@ -124,7 +126,11 @@ func _on_request_portrait(card):
 	portrait_file_dialog.popup_centered()
 
 func _on_portrait_file_selected(path):
-	if portrait_target:
-		var tex = load(path)
-		portrait_target.set_portrait(tex)
-		portrait_target = null
+        if portrait_target:
+                var tex = load(path)
+                portrait_target.set_portrait(tex)
+                portrait_target = null
+
+func _on_background_gui_input(event):
+        if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+                selected_card = null

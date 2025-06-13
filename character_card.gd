@@ -14,8 +14,8 @@ signal rename_requested(card)
 signal request_portrait(card)
 
 func _ready():
-	mouse_filter = Control.MOUSE_FILTER_PASS
-	gui_input.connect(_on_gui_input)
+        mouse_filter = Control.MOUSE_FILTER_STOP
+        gui_input.connect(_on_gui_input)
 	custom_minimum_size = Vector2(150, 200)  # Ensure minimum size
 	size = Vector2(150, 200)  # Set actual size
 	var pm = $PopupMenu
