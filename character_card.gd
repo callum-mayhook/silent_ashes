@@ -13,15 +13,15 @@ signal remove_connections(card)
 signal rename_requested(card)
 
 func _ready():
-        mouse_filter = Control.MOUSE_FILTER_PASS
-        gui_input.connect(_on_gui_input)
-        custom_minimum_size = Vector2(150, 200)  # Ensure minimum size
-        size = Vector2(150, 200)  # Set actual size
-        var pm = $PopupMenu
-        pm.add_item("Inspect", 0)
-        pm.add_item("Rename", 1)
-        pm.add_item("Remove Connections", 2)
-        pm.id_pressed.connect(_on_popup_menu_id_pressed)
+	mouse_filter = Control.MOUSE_FILTER_PASS
+	gui_input.connect(_on_gui_input)
+	custom_minimum_size = Vector2(150, 200)  # Ensure minimum size
+	size = Vector2(150, 200)  # Set actual size
+	var pm = $PopupMenu
+	pm.add_item("Inspect", 0)
+	pm.add_item("Rename", 1)
+	pm.add_item("Remove Connections", 2)
+	pm.id_pressed.connect(_on_popup_menu_id_pressed)
 
 func _draw():
 	# Draw our own background if Panel isn't working
@@ -57,15 +57,12 @@ func set_character(name: String, id: int):
 	$CharacterName.text = name
 
 func _show_context_menu():
-        var pm = $PopupMenu
-        pm.position = get_local_mouse_position()
-        pm.popup()
+	var pm = $PopupMenu
+	pm.position = get_local_mouse_position()
+	pm.popup()
 
 func _on_popup_menu_id_pressed(id: int):
-        match id:
-                0:
-                        print("Inspect ", character_name)
-                1:
-                        emit_signal("rename_requested", self)
-                2:
-                        emit_signal("remove_connections", self)
+	match id:
+		0: print("Inspect ", character_name)
+		1: emit_signal("rename_requested", self)
+		2: emit_signal("remove_connections", self)

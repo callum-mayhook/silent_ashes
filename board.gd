@@ -11,12 +11,12 @@ var rename_target = null
 @onready var rename_line_edit: LineEdit = $RenameDialog/LineEdit
 
 func _ready():
-        # Make board fill screen
-        anchor_right = 1.0
-        anchor_bottom = 1.0
-
-        rename_dialog.get_ok_button().text = "Rename"
-        rename_dialog.connect("confirmed", _on_rename_confirmed)
+	# Make board fill screen
+	anchor_right = 1.0
+	anchor_bottom = 1.0
+	
+	rename_dialog.get_ok_button().text = "Rename"
+	rename_dialog.connect("confirmed", _on_rename_confirmed)
 	
 	# Create cards
 	create_character_card("Elias Varn", Vector2(100, 100))
@@ -28,13 +28,13 @@ func _ready():
 func create_character_card(character_name: String, pos: Vector2):
 	var card = CharacterCard.instantiate()
 	add_child(card)
-        card.position = pos
-        card.set_character(character_name, cards.size())
-        card.card_clicked.connect(_on_card_clicked)
-        card.card_released.connect(_on_card_released)
-        card.remove_connections.connect(_on_remove_connections)
-        card.rename_requested.connect(_on_rename_requested)
-        cards.append(card)
+	card.position = pos
+	card.set_character(character_name, cards.size())
+	card.card_clicked.connect(_on_card_clicked)
+	card.card_released.connect(_on_card_released)
+	card.remove_connections.connect(_on_remove_connections)
+	card.rename_requested.connect(_on_rename_requested)
+	cards.append(card)
 
 func _on_card_clicked(card):
 	if selected_card and selected_card != card:
@@ -91,27 +91,27 @@ func _update_line_position(line: ColorRect, from_card, to_card):
 	line.position += offset
 
 func _process(_delta):
-        # Update all line positions when cards move
-        for conn in connections:
-                if is_instance_valid(conn.from) and is_instance_valid(conn.to):
-                        _update_line_position(conn.line, conn.from, conn.to)
+		# Update all line positions when cards move
+	for conn in connections:
+		if is_instance_valid(conn.from) and is_instance_valid(conn.to):
+			_update_line_position(conn.line, conn.from, conn.to)
 
 func _on_remove_connections(card):
-        var to_remove = []
-        for conn in connections:
-                if conn.from == card or conn.to == card:
-                        if is_instance_valid(conn.line):
-                                conn.line.queue_free()
-                        to_remove.append(conn)
-        for rem in to_remove:
-                connections.erase(rem)
+	var to_remove = []
+	for conn in connections:
+		if conn.from == card or conn.to == card:
+			if is_instance_valid(conn.line):
+				conn.line.queue_free()
+				to_remove.append(conn)
+				for rem in to_remove:
+					connections.erase(rem)
 
 func _on_rename_requested(card):
-        rename_target = card
-        rename_line_edit.text = card.character_name
-        rename_dialog.popup_centered(Vector2(200, 80))
+	rename_target = card
+	rename_line_edit.text = card.character_name
+	rename_dialog.popup_centered(Vector2(200, 80))
 
 func _on_rename_confirmed():
-        if rename_target:
-                rename_target.set_character(rename_line_edit.text, rename_target.character_id)
-                rename_target = null
+	if rename_target:
+		rename_target.set_character(rename_line_edit.text, rename_target.character_id)
+		rename_target = null
