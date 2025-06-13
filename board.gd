@@ -40,12 +40,20 @@ func create_character_card(character_name: String, pos: Vector2):
 	cards.append(card)
 
 func _on_card_clicked(card):
-	if selected_card and selected_card != card:
-		create_connection(selected_card, card)
-		selected_card = null
-	else:
-		selected_card = card
-		print("Selected: ", card.character_name)
+        if selected_card and selected_card != card:
+                create_connection(selected_card, card)
+                selected_card.set_selected(false)
+                selected_card = null
+        else:
+                if selected_card == card:
+                        selected_card.set_selected(false)
+                        selected_card = null
+                else:
+                        if selected_card:
+                                selected_card.set_selected(false)
+                        selected_card = card
+                        card.set_selected(true)
+                        print("Selected: ", card.character_name)
 
 func _on_card_released(card):
 	pass
