@@ -3,6 +3,9 @@ extends Control
 var is_dragging = false
 var drag_offset = Vector2()
 
+# Selection state
+var is_selected = false
+
 # Character data
 var character_name = "Unknown"
 var character_id = 0
@@ -32,8 +35,9 @@ func _draw():
 	# Background
 	draw_rect(rect, Color("#4a4a4a"))
 	
-	# Border
-	draw_rect(rect, Color.WHITE, false, 2.0)
+        # Border - thicker when selected
+        var border_width = is_selected ? 4.0 : 2.0
+        draw_rect(rect, Color.WHITE, false, border_width)
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton:
@@ -59,7 +63,11 @@ func set_character(name: String, id: int):
 	$CharacterName.text = name
 
 func set_portrait(texture: Texture2D):
-	$Portrait.texture = texture
+        $Portrait.texture = texture
+
+func set_selected(selected: bool):
+        is_selected = selected
+        update()
 func _show_context_menu():
 	var pm = $PopupMenu
 	pm.position = get_local_mouse_position()
